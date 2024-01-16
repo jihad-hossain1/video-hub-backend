@@ -1,0 +1,19 @@
+{
+  "name": "big-project",
+  "version": "1.0.0",
+  "description": "big-project",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "keywords": [
+    "any"
+  ],
+  "author": "jihad hossain",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "prettier": "^3.2.2"
+  }
+}
