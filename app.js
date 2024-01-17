@@ -1,6 +1,8 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 
@@ -20,10 +22,10 @@ app.use(
 app.use(express.static("public"));
 app.use(cookieParser());
 
-// routes import
-import userRoute from "./routes/user.routes.js";
+// routes const
+const userRoute = require("./routes/user.routes");
 
 //route declaration
 app.use("/api/v1/users", userRoute);
 
-export { app };
+module.exports = { app };

@@ -1,14 +1,15 @@
-import { ApiError } from "../utils/ApiError";
-import { asyncHandlerPromise } from "../utils/asyncHandler";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import { User } from "../models/user.model";
-dotenv.config({
-  path: "./.env",
-});
+const { ApiError } = require("../utils/ApiError");
+const { asyncHandlerPromise } = require("../utils/asyncHandler");
+const jwt = require("jsonwebtoken");
+const { User } = require("../models/user.model");
 
-export const verifyJWT = asyncHandlerPromise(async (req, _, next) => {
+const verifyJWT = asyncHandlerPromise(async (req, _, next) => {
   try {
+    // console.log(
+    //   "token found ----> ",
+    //   req.cookies?.accessToken ||
+    //     req.header("Authorization")?.replace("Bearer ", "")
+    // );
     const token =
       req.cookies?.accessToken ||
       req.header("Authorization")?.replace("Bearer ", "");
@@ -33,3 +34,5 @@ export const verifyJWT = asyncHandlerPromise(async (req, _, next) => {
     throw new ApiError(401, error?.message || "invalid access token");
   }
 });
+
+module.exports = {verifyJWT};

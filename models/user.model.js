@@ -1,12 +1,9 @@
-import mongoose, { Schema } from "mongoose";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-dotenv.config({
-  path: "./.env",
-});
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const dotenv = require("dotenv");
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -36,7 +33,7 @@ const userSchema = new Schema(
     coverImage: {
       type: String,
     },
-    watchHistory: [{ type: Schema.Types.ObjectId, ref: "Video" }],
+    watchHistory: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -88,4 +85,6 @@ userSchema.methods.generateRefreshToken = function () {
   );
 };
 
-export const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = { User };

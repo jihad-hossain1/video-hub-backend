@@ -2,11 +2,10 @@
   "name": "big-project",
   "version": "1.0.0",
   "description": "big-project",
-  "type": "module",
   "vercel-build": "echo hello",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon index.js"
   },
   "keywords": [
     "any"

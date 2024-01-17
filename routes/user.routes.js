@@ -1,11 +1,11 @@
-import { Router } from "express";
-import {
+const { Router } = require("express");
+const {
   loginUser,
   logoutUser,
   registerUser,
-} from "../controlers/user.controllers.js";
-import { upload } from "../middlewares/multer.middleware.js";
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+} = require("../controlers/user.controllers");
+const { upload } = require("../middlewares/multer.middleware");
+const { verifyJWT } = require("../middlewares/auth.middleware");
 
 const router = Router();
 
@@ -28,4 +28,4 @@ router.route("/login").post(loginUser);
 //secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
 
-export default router;
+module.exports = router;

@@ -1,12 +1,9 @@
-import { asyncHandler, asyncHandlerPromise } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-import { User } from "../models/user.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
-import dotenv from "dotenv";
-dotenv.config({
-  path: "./.env",
-});
+const { asyncHandlerPromise } = require("../utils/asyncHandler");
+const { ApiError } = require("../utils/ApiError");
+const { User } = require("../models/user.model");
+const { uploadOnCloudinary } = require("../utils/cloudinary");
+const { ApiResponse } = require("../utils/ApiResponse");
+const dotenv = require("dotenv");
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -27,7 +24,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
 };
 
 const registerUser = asyncHandlerPromise(async (req, res) => {
-  // get user details from fronend
+  // get user details = require fronend
   const { fullname, username, password, email } = req.body;
   // console.log("email: ", email);
 
@@ -51,7 +48,7 @@ const registerUser = asyncHandlerPromise(async (req, res) => {
   const avatarLocalPath = req.files?.avatar[0]?.path;
 
   let coverImageLocalPath;
-  // console.log("from if ... ", Array.isArray(req.files?.coverImage));
+  // console.log("= require if ... ", Array.isArray(req.files?.coverImage));
   if (
     req.files &&
     Array.isArray(req.files?.coverImage) &&
@@ -82,7 +79,7 @@ const registerUser = asyncHandlerPromise(async (req, res) => {
     username: username.toLowerCase(),
   });
 
-  // remove password and refresh token field from response
+  // remove password and refresh token field = require response
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
@@ -107,7 +104,8 @@ const loginUser = asyncHandlerPromise(async (req, res) => {
   const { email, username, password } = req.body;
 
   // username or email
-  if (!username || !email) {
+
+  if (!email && !username) {
     throw new ApiError(400, "username or password is required");
   }
 
@@ -140,6 +138,21 @@ const loginUser = asyncHandlerPromise(async (req, res) => {
     secure: true,
   };
 
+  // return res
+  //   .status(200)
+  //   .cookie("accessToken", accessToken, options)
+  //   .cookie("refreshToken", refreshToken, options)
+  //   .json(
+  //     new ApiResponse(
+  //       200,
+  //       {
+  //         user: loggedInUser,
+  //         accessToken,
+  //         refreshToken,
+  //       },
+  //       "user successfully loggedIn.."
+  //     )
+  //   );
   return res
     .status(200)
     .cookie("accessToken", accessToken, options)
@@ -152,7 +165,7 @@ const loginUser = asyncHandlerPromise(async (req, res) => {
           accessToken,
           refreshToken,
         },
-        "user successfully loggedIn.."
+        "User logged In Successfully"
       )
     );
 });
@@ -177,9 +190,9 @@ const logoutUser = asyncHandlerPromise(async (req, res) => {
 
   return res
     .status(200)
-    .clearCookie("accessToken")
+    .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "user successfully loggedOut ..."));
 });
 
-export { registerUser, loginUser, logoutUser };
+module.exports = { registerUser, loginUser, logoutUser };

@@ -19,4 +19,4 @@ const asyncHandler = (func) => async (req, res, next) => {
   }
 };
 
-export { asyncHandler, asyncHandlerPromise };
+module.exports = { asyncHandler, asyncHandlerPromise };
