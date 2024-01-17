@@ -1,3 +1,3 @@
-import index from "../src/app";
+import index from "../src/index.js";
 
-export { index };
+export default index;
